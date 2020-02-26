@@ -1,13 +1,24 @@
 (function init() {
+
     const keys = document.querySelectorAll('.key');
-    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+    keys.forEach(key => {
+        key.addEventListener('click', playSound);
+        key.addEventListener('transitionend', removeTransition);
+    });
 
     console.log("Image credit: Gabriel Barletta via Unsplash.com\nProject credit: Wesbos's JS30 series")
 })();
 
 function playSound(e) { 
-    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-    const key = document.querySelector(`.key[data-key="${e.keyCode}"]` );
+    
+    let keyCode = e.keyCode;
+
+    if (e.type === "click") {
+        keyCode = this.attributes[0].value;
+    }
+
+    const audio = document.querySelector(`audio[data-key="${keyCode}"]`);
+    const key = document.querySelector(`.key[data-key="${keyCode}"]` );
 
     if (!audio) return;
     audio.currentTime = 0;
